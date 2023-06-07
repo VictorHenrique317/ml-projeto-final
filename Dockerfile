@@ -1,5 +1,5 @@
 FROM jupyter/scipy-notebook
 
-COPY . /
-RUN jupyter nbconvert --to script /main.ipynb
-# RUN python3 main.py
+COPY . /home/jovyan
+RUN jupyter nbconvert --to script /home/jovyan/main.ipynb
+# RUN python3 /home/jovyan/main.py
