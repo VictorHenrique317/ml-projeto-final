@@ -1,5 +1,5 @@
 FROM jupyter/scipy-notebook
 
 COPY . /home/jovyan
-RUN /home/jovyan/run_all.sh
+RUN jupyter nbconvert --to script /home/jovyan/main.ipynb
 RUN time python3 /home/jovyan/main.py

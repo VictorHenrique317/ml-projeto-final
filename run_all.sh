@@ -1,1 +1,1 @@
-jupyter nbconvert --to script /home/jovyan/main.ipynb
+time jupyter nbconvert --to script /home/jovyan/main.ipynb
