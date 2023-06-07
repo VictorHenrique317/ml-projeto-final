@@ -1,0 +1,1 @@
+git pull; docker build -t ml-tp-final .
