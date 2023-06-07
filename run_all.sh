@@ -1,0 +1,1 @@
+jupyter nbconvert --to script /home/jovyan/main.ipynb
