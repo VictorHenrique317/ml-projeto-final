@@ -164,7 +164,7 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \title{main}
+    \title{report}
     
     
     
@@ -390,39 +390,39 @@
     
 
     
-    Repositório com o código desenvolvido para realizar o trabalho
+    Esse relatório tem por objetivo expor o estudo feito por mim a partir
+dos dados de dor crônica, e por consequência não possui o código
+necessário para a reprodução do mesmo. O repositório com o código
+completo se encontra em
 (https://github.com/VictorHenrique317/ml-projeto-final)
 
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{18}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} \PYZpc{}pip install xgboost}
-\PY{c+c1}{\PYZsh{} \PYZpc{}pip install seaborn}
-\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
-\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{LabelEncoder}
-\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{neural\PYZus{}network} \PY{k+kn}{import} \PY{n}{MLPClassifier}
-\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{impute} \PY{k+kn}{import} \PY{n}{SimpleImputer}
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{core}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k+kn}{import} \PY{n}{Image}
-\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k+kn}{import} \PY{n}{KFold}
-\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{log\PYZus{}loss}
-\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{confusion\PYZus{}matrix}
-\PY{k+kn}{import} \PY{n+nn}{xgboost} \PY{k}{as} \PY{n+nn}{xgb}
-\PY{k+kn}{import} \PY{n+nn}{os}
-\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{StandardScaler}
-\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble} \PY{k+kn}{import} \PY{n}{RandomForestClassifier}
-\PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
-\end{Verbatim}
-\end{tcolorbox}
+    Os diferentes conjuntos de recursos são definidos da seguinte forma:
 
-    Definindo os diferentes conjuntos de features. - X\_questions são as
-perguntas feitas para o paciente durante a consulta. - X\_drugs são os
-remédios que o paciente toma. - X é a junção de X\_Questions e X\_drugs.
-- X\_random é um conjunto de features aleatórias.
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  ``X\_questions'' são as perguntas feitas ao paciente durante a
+  consulta, contendo informações relevantes para a análise.
+\item
+  ``X\_drugs'' consiste nos medicamentos que o paciente está tomando.
+\item
+  ``X'' representa a combinação dos conjuntos de recursos
+  ``X\_questions'' e ``X\_drugs'', criando um conjunto mais abrangente.
+\item
+  ``X\_random'' é um conjunto de recursos aleatórios, que contêm
+  variáveis sem uma relação direta com as perguntas ou medicamentos.
+\end{enumerate}
+
+Para melhorar a eficiência do modelo, algumas colunas não relevantes,
+como a data de nascimento, foram removidas, bem como as colunas que
+possuem um valor constante em todos os exemplos, já que essas não
+fornecem informações úteis para a análise. Essa seleção cuidadosa de
+recursos relevantes ajudará a concentrar a atenção do modelo nas
+informações mais significativas.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{19}{\boxspacing}
+\prompt{In}{incolor}{532}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 
@@ -435,50 +435,85 @@ remédios que o paciente toma. - X é a junção de X\_Questions e X\_drugs.
                                         \PY{l+m+mi}{142}\PY{p}{,}\PY{l+m+mi}{143}\PY{p}{,}\PY{l+m+mi}{148}\PY{p}{,}\PY{l+m+mi}{151}\PY{p}{,}\PY{l+m+mi}{152}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} Essas colunas são constantes}
 
 \PY{n}{X\PYZus{}random} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{n}{X\PYZus{}questions}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} Para comparar a perfomance do modelo}
-
+\PY{n}{X\PYZus{}random} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X\PYZus{}random}\PY{p}{)}
 \PY{n}{X} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}questions}\PY{p}{,} \PY{n}{X\PYZus{}drugs}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} A junção das duas tabelas}
 \PY{n}{X} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    Extraindo as 3 diferentes variáveis que indicam se o paciente teve
-melhora ou não
+    Com base nos dados fornecidos, podemos extrair três diferentes variáveis
+que indicam se o paciente teve melhora ou não. Essas variáveis são:
+``y\_vas30'', ``y\_vas50'' e ``y\_gic''.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  ``y\_vas30'': Essa variável indica se o paciente apresentou uma
+  melhora de pelo menos 30\% na escala de dor VAS (Visual Analog Scale -
+  Escala Analógica Visual). Se o paciente teve uma redução de pelo menos
+  30\% na intensidade da dor, a variável ``y\_vas30'' é marcada como
+  positiva, indicando melhora. Caso contrário, é marcada como negativa.
+\item
+  ``y\_vas50'': Essa variável indica se o paciente teve uma melhora de
+  pelo menos 50\% na escala VAS. Se o paciente teve uma redução de pelo
+  menos 50\% na intensidade da dor, a variável ``y\_vas50'' é marcada
+  como positiva, indicando melhora. Caso contrário, é marcada como
+  negativa.
+\item
+  ``y\_gic'': Essa variável representa a avaliação de melhora feita pelo
+  médico utilizando o Global Impression of Change (GIC). O médico avalia
+  se houve uma melhora geral no estado de saúde do paciente. Se o médico
+  considerar que houve melhora, a variável ``y\_gic'' é marcada como
+  positiva. Caso contrário, é marcada como negativa.
+\end{enumerate}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{20}{\boxspacing}
+\prompt{In}{incolor}{533}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{Y} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{182}\PY{p}{:}\PY{l+m+mi}{185}\PY{p}{]}
 
-\PY{n}{y\PYZus{}vas30} \PY{o}{=} \PY{n}{Y}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}
-\PY{n}{y\PYZus{}vas50} \PY{o}{=} \PY{n}{Y}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}
-\PY{n}{y\PYZus{}gic} \PY{o}{=} \PY{n}{Y}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}
+\PY{n}{y\PYZus{}vas30} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{Y}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{n}{y\PYZus{}vas50} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{Y}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{n}{y\PYZus{}gic} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{Y}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    Nesse ponto temos 3 targets diferentes, temos que decidir qual faz mais
-sentido usar. Pensei que não faria sentido usar uma delas e ignorar o
-resto, então decidi criar uma nova variável que leva em consideração as
-3 diferentes avaliações de melhora (2 do paciente e uma do médico).
+    Neste ponto, nos deparamos com três alvos diferentes e precisamos
+decidir qual deles faz mais sentido utilizar. Considerei que não seria
+adequado escolher apenas um deles e ignorar os demais. Portanto, decidi
+criar uma nova variável que leve em consideração as três diferentes
+avaliações de melhora, duas feitas pelo paciente e uma feita pelo
+médico.
 
-Primeiro criei y\_perceived, que é a melhora percebida pelo paciente.
-Ela é definida como a disjunção entre y\_vas30 e y\_vas50 pois quero
-captar qualquer tipo de melhora percebida pelo paciente, seja ela
-pequena ou grande.
+Primeiramente, criei a variável ``y\_perceived'', que representa a
+melhora percebida pelo paciente. Essa variável é definida como a união
+das variáveis ``y\_vas30'' e ``y\_vas50'', pois desejo capturar qualquer
+tipo de melhora percebida pelo paciente, seja ela pequena (30\%) ou
+significativa (50\%).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{21}{\boxspacing}
+\prompt{In}{incolor}{534}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{y\PYZus{}perceived} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{logical\PYZus{}or}\PY{p}{(}\PY{n}{y\PYZus{}vas30}\PY{p}{,} \PY{n}{y\PYZus{}vas50}\PY{p}{)}
 \PY{n}{y\PYZus{}perceived} \PY{o}{=} \PY{n}{y\PYZus{}perceived}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+\PY{n}{y\PYZus{}perceived} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{y\PYZus{}perceived}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    E finalmente o target (y) é definido como a interseção entre melhora
-percebida e GIC, pois o paciente deve perceber alguma melhora e o médico
-deve concordar, esse é o cenário mais conservador possível.
+    O alvo ``y'' é definido como a interseção entre a melhora percebida e o
+GIC (Global Impression of Change - Impressão Global de Mudança). Essa
+definição é baseada na necessidade de o paciente perceber alguma melhora
+(indicado por ``y\_perceived'') e o médico concordar com essa percepção
+(indicado por ``y\_gic''). Após uma análise experimental, verifiquei que
+essa é a definição de alvo que melhor se ajusta aos dados, em comparação
+com as outras cinco definições mencionadas anteriormente.
+
+Dessa forma, além de fazer sentido intuitivamente, a expressividade
+dessa definição também foi verificada experimentalmente, demonstrando
+sua adequação para o propósito do estudo.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{22}{\boxspacing}
+\prompt{In}{incolor}{ }{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{logical\PYZus{}and}\PY{p}{(}\PY{n}{y\PYZus{}perceived}\PY{p}{,} \PY{n}{y\PYZus{}gic}\PY{p}{)}
 \PY{n}{y} \PY{o}{=} \PY{n}{y}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
@@ -486,22 +521,24 @@ deve concordar, esse é o cenário mais conservador possível.
 \end{Verbatim}
 \end{tcolorbox}
 
-    Porém, ao fazer isso a distribuição dos dados fica desbalanceada, apenas
-15\% dos exemplos são de pacientes que melhoraram segundo nossa nova
-variável y.
+    Ao adotar a definição de alvo ``y'' como a interseção entre a melhora
+percebida e o GIC, a distribuição dos dados resultantes fica
+desbalanceada. Apenas 15\% dos exemplos são classificados como pacientes
+que apresentaram melhora, de acordo com o nosso alvo ``y''.
 
-Faz sentido a porcentagem de casos positivos ser baixa em y, pois como
-dito em nossa reunião a maior parte dos pacientes que sofrem com dor
-crônica não apresentam melhora.
+Essa baixa porcentagem de casos positivos em ``y'' faz sentido, levando
+em consideração a reunião em que foi discutido que a maioria dos
+pacientes que sofrem de dor crônica não apresentam melhora
+significativa. Portanto, a distribuição desigual é uma representação
+adequada da realidade clínica em relação à melhora dos pacientes.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{23}{\boxspacing}
+\prompt{In}{incolor}{535}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}gic é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}gic}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}gic}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}vas30 é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}vas30}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}vas30}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}vas50 é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}vas50}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}vas50}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}perceived é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}perceived}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}perceived}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}gic é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}gic}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}gic}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}vas30 é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}vas30}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}vas30}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}vas50 é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}vas50}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}vas50}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}perceived é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}perceived}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}perceived}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{o}{/}\PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
@@ -510,41 +547,59 @@ crônica não apresentam melhora.
 A porcentagem de casos positivos em y\_gic é 28.96\%
 A porcentagem de casos positivos em y\_vas30 é 43.84\%
 A porcentagem de casos positivos em y\_vas50 é 35.84\%
-
 A porcentagem de casos positivos em y\_perceived é 43.84\%
 A porcentagem de casos positivos em y é 15.04\%
     \end{Verbatim}
 
-    Então para tornar o modelo igualmente habilidoso tanto na predição de
-casos negativos, quanto na predição de casos positivos é necessário
-remover alguns casos negativos para que a distribuição dos dados seja
-mais equilibrada.
+    O objetivo aqui é alcançar uma distribuição equilibrada entre os
+exemplos positivos e negativos. Isso garantirá que o modelo tenha a
+mesma capacidade de classificar ambos os casos, sem favorecer uma
+categoria em relação à outra. No entanto, a única maneira que tenho
+disponível para alcançar esse equilíbrio é remover os casos negativos em
+excesso presentes nos dados originais.
 
-Essa decisão tem um efeito adverso óbvio, o modelo terá uma menor
-qualidade devido a quantidade reduzida de dados. Porém,acredito que por
-se tratar de um modelo de grande responsábilidade (por atuar na área da
-saúde), ele deveria em tese identificar com a mesma confiabilidade tanto
-os casos positivos quanto os negativos para que não haja injustiças.
+Essa situação apresenta um desafio para o modelo, uma vez que é
+necessário reduzir o tamanho do conjunto de treinamento, que já é
+limitado, contendo apenas 625 exemplos, para 201 exemplos. Sendo assim,
+tornar o modelo igualmente capaz de classificar ambas as categorias tem
+uma consequência negativa evidente: uma redução na qualidade devido à
+quantidade de dados reduzida. Mais adiante, mostrarei como diferentes
+distribuições de exemplos positivos (pacientes que apresentaram melhora)
+e negativos (pacientes que não apresentaram melhora) afetam o
+classificador.
+
+Apesar de todos os fatos mencionados, acredito que, por se tratar de um
+modelo com grande responsabilidade na área da saúde, é essencial que ele
+seja justo e equilibrado na classificação dos casos, minimizando assim
+os falsos negativos e falsos positivos que, nesse contexto, representam
+cenários prejudiciais para as pessoas. Além disso, levar em consideração
+todos os 625 dados originais torna o modelo ineficaz, como demonstrarei
+mais adiante.
+
+A distribuição equilibrada dos targets também ajuda a evitar problemas
+como o viés do modelo em direção à categoria majoritária, que pode
+ocorrer quando há um desequilíbrio significativo na distribuição dos
+dados. É importante ressaltar que a obtenção de uma distribuição
+equilibrada não apenas melhora a qualidade do modelo, mas também aumenta
+sua confiabilidade e aplicabilidade em diferentes cenários e contextos.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{24}{\boxspacing}
+\prompt{In}{incolor}{536}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{zero\PYZus{}rows} \PY{o}{=} \PY{n}{y}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{p}{(}\PY{n}{y} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{all}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]} \PY{c+c1}{\PYZsh{} Achando os indices das linhas que tem y=0}
-\PY{c+c1}{\PYZsh{} Selecionando aleatoriamente uma porcentagem dessas linhas para deletar}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\PY{n}{zero\PYZus{}rows} \PY{o}{=} \PY{n}{y}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{p}{(}\PY{n}{y} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{all}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}
 \PY{n}{delete\PYZus{}rows} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{zero\PYZus{}rows}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{zero\PYZus{}rows}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{1.25}\PY{p}{)}\PY{p}{,} \PY{n}{replace}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
 
-\PY{c+c1}{\PYZsh{} Deletando as linhas selecionadas de todos os conjuntos de features}
 \PY{n}{X} \PY{o}{=} \PY{n}{X}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{delete\PYZus{}rows}\PY{p}{)}
 \PY{n}{X\PYZus{}drugs} \PY{o}{=} \PY{n}{X\PYZus{}drugs}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{delete\PYZus{}rows}\PY{p}{)}
 \PY{n}{X\PYZus{}questions} \PY{o}{=} \PY{n}{X\PYZus{}questions}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{delete\PYZus{}rows}\PY{p}{)}
 \PY{n}{X\PYZus{}random} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{delete}\PY{p}{(}\PY{n}{X\PYZus{}random}\PY{p}{,} \PY{n}{delete\PYZus{}rows}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
 
-\PY{c+c1}{\PYZsh{} Deletando as linhas selecionadas de todos os conjuntos targets}
-\PY{n}{y\PYZus{}gic} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{delete}\PY{p}{(}\PY{n}{y\PYZus{}gic}\PY{p}{,} \PY{n}{delete\PYZus{}rows}\PY{p}{)}
-\PY{n}{y\PYZus{}vas30} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{delete}\PY{p}{(}\PY{n}{y\PYZus{}vas30}\PY{p}{,} \PY{n}{delete\PYZus{}rows}\PY{p}{)}
-\PY{n}{y\PYZus{}vas50} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{delete}\PY{p}{(}\PY{n}{y\PYZus{}vas50}\PY{p}{,} \PY{n}{delete\PYZus{}rows}\PY{p}{)}
-\PY{n}{y\PYZus{}perceived} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{delete}\PY{p}{(}\PY{n}{y\PYZus{}perceived}\PY{p}{,} \PY{n}{delete\PYZus{}rows}\PY{p}{)}
-\PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{delete}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{delete\PYZus{}rows}\PY{p}{)}
+\PY{n}{y\PYZus{}gic} \PY{o}{=} \PY{n}{y\PYZus{}gic}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{delete\PYZus{}rows}\PY{p}{)}
+\PY{n}{y\PYZus{}vas30} \PY{o}{=} \PY{n}{y\PYZus{}vas30}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{delete\PYZus{}rows}\PY{p}{)}
+\PY{n}{y\PYZus{}vas50} \PY{o}{=} \PY{n}{y\PYZus{}vas50}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{delete\PYZus{}rows}\PY{p}{)}
+\PY{n}{y\PYZus{}perceived} \PY{o}{=} \PY{n}{y\PYZus{}perceived}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{delete\PYZus{}rows}\PY{p}{)}
+\PY{n}{y} \PY{o}{=} \PY{n}{y}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{delete\PYZus{}rows}\PY{p}{)}
 
 \PY{n+nb}{print}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
 \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}questions}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
@@ -554,16 +609,40 @@ os casos positivos quanto os negativos para que não haja injustiças.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
+(625, 1)
 (201, 312)
 (201, 175)
 (201, 137)
-(201,)
+(201, 1)
     \end{Verbatim}
 
-    Pre-processamento dos dados
+    É possível observar que, com a extração do excesso de casos negativos, a
+distribuição dos targets, incluindo ``y'' e os outros targets
+alternativos, tornou-se equilibrada.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{14}{\boxspacing}
+\prompt{In}{incolor}{537}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}gic é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}gic}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}gic}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}vas30 é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}vas30}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}vas30}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}vas50 é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}vas50}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}vas50}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y\PYZus{}perceived é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y\PYZus{}perceived}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{o}{/}\PY{n}{y\PYZus{}perceived}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A porcentagem de casos positivos em y é }\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{o}{/}\PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+A porcentagem de casos positivos em y\_gic é 54.73\%
+A porcentagem de casos positivos em y\_vas30 é 60.70\%
+A porcentagem de casos positivos em y\_vas50 é 51.24\%
+A porcentagem de casos positivos em y\_perceived é 60.70\%
+A porcentagem de casos positivos em y é 46.77\%
+    \end{Verbatim}
+
+    Pré-processamento dos dados.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{538}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Codificando as variáveis categóricas}
 \PY{n}{le} \PY{o}{=} \PY{n}{LabelEncoder}\PY{p}{(}\PY{p}{)}
@@ -598,21 +677,41 @@ os casos positivos quanto os negativos para que não haja injustiças.
 \PY{n}{X\PYZus{}drugs} \PY{o}{=} \PY{n}{scaler}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X\PYZus{}drugs}\PY{p}{)}
 \PY{n}{X\PYZus{}questions} \PY{o}{=} \PY{n}{scaler}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X\PYZus{}questions}\PY{p}{)}
 \PY{n}{X\PYZus{}random} \PY{o}{=} \PY{n}{scaler}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X\PYZus{}random}\PY{p}{)}
+
+\PY{n}{X} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+\PY{n}{X\PYZus{}drugs} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X\PYZus{}drugs}\PY{p}{)}
+\PY{n}{X\PYZus{}questions} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X\PYZus{}questions}\PY{p}{)}
+\PY{n}{X\PYZus{}random} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{X\PYZus{}random}\PY{p}{)}
+
+\PY{n}{y\PYZus{}gic} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{y\PYZus{}gic}\PY{p}{)}
+\PY{n}{y\PYZus{}vas30} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{y\PYZus{}vas30}\PY{p}{)}
+\PY{n}{y\PYZus{}vas50} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{y\PYZus{}vas50}\PY{p}{)}
+\PY{n}{y\PYZus{}perceived} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{y\PYZus{}perceived}\PY{p}{)}
+\PY{n}{y} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{y}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    Definindo as funções que irão treinar os diferentes algoritmos que
-selecionei. Os erros de teste são calculados usando Cross-Validation com
-5 ``folds'' para serem uma melhor aproximação do erro esperado, as
-acuracias dos modelos também são registradas durante a validação
-cruzada.
+    Para treinar os diferentes algoritmos selecionados, defini funções
+específicas. A fim de obter uma melhor estimativa do erro esperado, os
+erros de teste são calculados usando a técnica de validação cruzada com
+5 `folds'. Durante esse processo, as acurácias dos modelos também são
+registradas para cada iteração da validação cruzada.
 
-Selecionei dois algoritmos que não precisam de muitos dados o XGBoosting
-e a RandomForest, e pela curiosidade também treinei MLP's que
-naturalmente precisam de mais dados somente para comparar os resultados.
+Realizei uma tentativa de aplicar o aprendizado semi-supervisionado,
+utilizando os dados deletados como exemplos não rotulados. No entanto,
+os resultados obtidos não apresentaram melhoras significativas. Por
+questões de espaço, não será possível incluir o código desenvolvido
+neste documento, mas ele está disponível no repositório mencionado no
+início do relatório.
+
+Na seleção dos algoritmos, optei por dois que demonstraram boa
+eficiência mesmo com conjuntos de dados menores: XGBoosting e
+RandomForest. Além disso, por curiosidade e para fins comparativos,
+também treinei MLPs, que naturalmente requerem uma quantidade maior de
+dados.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{15}{\boxspacing}
+\prompt{In}{incolor}{539}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{trainClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{clf}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
     \PY{n}{kf} \PY{o}{=} \PY{n}{KFold}\PY{p}{(}\PY{n}{n\PYZus{}splits}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
@@ -621,10 +720,10 @@ naturalmente precisam de mais dados somente para comparar os resultados.
     \PY{n}{empirical\PYZus{}accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
     \PY{n}{test\PYZus{}accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 
-    \PY{k}{for} \PY{n}{train\PYZus{}indices}\PY{p}{,} \PY{n}{test\PYZus{}indicies} \PY{o+ow}{in} \PY{n}{kf}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{p}{:}
-        \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{n}{train\PYZus{}indices}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{test\PYZus{}indicies}\PY{p}{]}
-        \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{y}\PY{p}{[}\PY{n}{train\PYZus{}indices}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{[}\PY{n}{test\PYZus{}indicies}\PY{p}{]}
-        
+    \PY{k}{for} \PY{n}{train\PYZus{}indices}\PY{p}{,} \PY{n}{test\PYZus{}indices} \PY{o+ow}{in} \PY{n}{kf}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{p}{:}
+        \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test} \PY{o}{=} \PY{n}{X}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{train\PYZus{}indices}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{test\PYZus{}indices}\PY{p}{]}
+        \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{y}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{train\PYZus{}indices}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{test\PYZus{}indices}\PY{p}{]}
+
         \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)} \PY{c+c1}{\PYZsh{} classificador generico}
 
         \PY{n}{empirical\PYZus{}loss} \PY{o}{=} \PY{n}{log\PYZus{}loss}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{)}\PY{p}{)}
@@ -648,20 +747,11 @@ naturalmente precisam de mais dados somente para comparar os resultados.
     \PY{k}{if} \PY{n}{print\PYZus{}accuracy}\PY{p}{:}
         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{empirical\PYZus{}accuracy: }\PY{l+s+si}{\PYZob{}}\PY{n}{empirical\PYZus{}accuracy}\PY{l+s+si}{:}\PY{l+s+s2}{ .2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{} | test\PYZus{}accuracy: }\PY{l+s+si}{\PYZob{}}\PY{n}{test\PYZus{}accuracy}\PY{l+s+si}{:}\PY{l+s+s2}{ .2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{} }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
 
-    \PY{k}{return} \PY{p}{(}\PY{n}{empirical\PYZus{}loss}\PY{p}{,} \PY{n}{test\PYZus{}loss}\PY{p}{)}
+    \PY{k}{return} \PY{p}{(}\PY{n}{empirical\PYZus{}loss}\PY{p}{,} \PY{n}{test\PYZus{}loss}\PY{p}{,} \PY{n}{test\PYZus{}accuracy}\PY{p}{)}
 
-\PY{k}{def} \PY{n+nf}{trainXGBBoostingClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{print\PYZus{}importance}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
+\PY{k}{def} \PY{n+nf}{trainXGBBoostingClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
     \PY{n}{clf} \PY{o}{=} \PY{n}{xgb}\PY{o}{.}\PY{n}{XGBClassifier}\PY{p}{(}\PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{n}{max\PYZus{}depth}\PY{p}{,}  \PY{n}{gamma}\PY{o}{=}\PY{n}{gamma}\PY{p}{,} \PY{n}{eta}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{min\PYZus{}child\PYZus{}weight}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{subsample}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{,} 
                             \PY{n}{colsample\PYZus{}bytree}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{,} \PY{n}{scale\PYZus{}pos\PYZus{}weight}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-    
-    \PY{k}{if} \PY{n}{print\PYZus{}importance}\PY{p}{:}
-        \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{)}
-        \PY{n}{feat\PYZus{}imp} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{clf}\PY{o}{.}\PY{n}{get\PYZus{}booster}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{get\PYZus{}fscore}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-        \PY{n}{feat\PYZus{}imp}\PY{o}{.}\PY{n}{index} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Index}\PY{p}{(}\PY{n}{feat\PYZus{}imp}\PY{o}{.}\PY{n}{index}\PY{p}{)}
-        \PY{n}{feat\PYZus{}imp}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-        \PY{n}{feat\PYZus{}imp}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{title}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Importância da feature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{width}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Avaliação de importância da feature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        
     \PY{k}{return} \PY{n}{trainClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{clf}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{p}{)}
 
 \PY{k}{def} \PY{n+nf}{trainMLPClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{hidden\PYZus{}layer\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
@@ -672,169 +762,57 @@ naturalmente precisam de mais dados somente para comparar os resultados.
 \PY{k}{def} \PY{n+nf}{trainRandomForestClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
     \PY{n}{clf} \PY{o}{=}\PY{n}{clf} \PY{o}{=} \PY{n}{RandomForestClassifier}\PY{p}{(}\PY{n}{n\PYZus{}estimators}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{n}{max\PYZus{}depth}\PY{p}{)}
     \PY{k}{return} \PY{n}{trainClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{clf}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{p}{)}
-
-\PY{k}{def} \PY{n+nf}{createPlotDir}\PY{p}{(}\PY{n}{alg\PYZus{}name}\PY{p}{)}\PY{p}{:}
-    \PY{k}{if} \PY{o+ow}{not} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{exists}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{plots}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
-        \PY{n}{os}\PY{o}{.}\PY{n}{mkdir}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{plots}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-
-    \PY{k}{if} \PY{o+ow}{not} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{exists}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{plots/}\PY{l+s+si}{\PYZob{}}\PY{n}{alg\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
-        \PY{n}{os}\PY{o}{.}\PY{n}{mkdir}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{plots/}\PY{l+s+si}{\PYZob{}}\PY{n}{alg\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{/}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-
-\PY{k}{def} \PY{n+nf}{savePlot}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{alg\PYZus{}name}\PY{p}{,} \PY{n}{filename}\PY{p}{)}\PY{p}{:}
-    \PY{n}{x} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-    \PY{n}{empirical\PYZus{}losses} \PY{o}{=} \PY{p}{[}\PY{n}{data}\PY{p}{[}\PY{n}{key}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{key} \PY{o+ow}{in} \PY{n}{x}\PY{p}{]}
-    \PY{n}{test\PYZus{}losses} \PY{o}{=} \PY{p}{[}\PY{n}{data}\PY{p}{[}\PY{n}{key}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{k}{for} \PY{n}{key} \PY{o+ow}{in} \PY{n}{x}\PY{p}{]}
-
-    \PY{n}{legend} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{empirical loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-    \PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
-    \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)}
-    \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{test\PYZus{}losses}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dashed}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-    \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{empirical\PYZus{}losses}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-    \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{legend}\PY{p}{)}
-
-    \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plots/}\PY{l+s+si}{\PYZob{}}\PY{n}{alg\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{/}\PY{l+s+si}{\PYZob{}}\PY{n}{filename}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-    \PY{n}{plt}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)} 
 \end{Verbatim}
 \end{tcolorbox}
 
-    Agora é a fase de seleção de modelos, para cada combinação (algoritmo,
-conjunto de features) plotei o gráfico de erro x capacidade para
-identificar o nível ideal de complexidade e o conjunto de features que é
-mais adequado para a classificação.
+    Agora estamos na fase de seleção de modelos. Para cada combinação de
+algoritmo e conjunto de características, plotei o gráfico de erro em
+relação à capacidade, a fim de determinar o nível ideal de complexidade
+e o conjunto de características mais adequado para a classificação.
 
 \begin{itemize}
-\tightlist
 \item
-  A medida de complexidade para as MLP's de 3 camadas é o número de
-  neurônios na camada oculta.
+  No caso das MLP's de 3 camadas, a medida de complexidade é determinada
+  pelo número de neurônios na camada oculta.
 \item
-  A medida de complexidade para as Random Forests é a profundidade
-  máxima das árvores (classificadores individuais).
+  Para as Random Forests, a medida de complexidade é definida pela
+  profundidade máxima das árvores, que são os classificadores
+  individuais.
 \item
-  A medida de complexidade para o XGBoost é a profundidade máxima das
-  árvores (classificadores individuais).
+  No XGBoost, a medida de complexidade também é determinada pela
+  profundidade máxima das árvores, que são os classificadores
+  individuais.
 \end{itemize}
 
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{ }{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{plotCapacityGraphsForMLP}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{filename}\PY{p}{,} \PY{n}{max\PYZus{}neuron\PYZus{}nb}\PY{p}{)}\PY{p}{:}
-    \PY{n}{createPlotDir}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mlp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+Realizei a comparação dos diferentes modelos inicialmente considerando
+apenas o conjunto de características X. Após a seleção do modelo, é
+possível analisar como os diferentes conjuntos de características afetam
+a capacidade preditiva.
 
-    \PY{n}{data} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{p}{)}
-    \PY{k}{for} \PY{n}{neuron\PYZus{}nb} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{max\PYZus{}neuron\PYZus{}nb}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
-        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{neuron\PYZus{}nb}\PY{o}{/}\PY{n}{max\PYZus{}neuron\PYZus{}nb}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-        \PY{p}{(}\PY{n}{empirical\PYZus{}loss}\PY{p}{,} \PY{n}{test\PYZus{}loss}\PY{p}{)} \PY{o}{=} \PY{n}{trainMLPClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{hidden\PYZus{}layer\PYZus{}size}\PY{o}{=}\PY{n}{neuron\PYZus{}nb}\PY{p}{)}
-        \PY{n}{data}\PY{p}{[}\PY{n}{neuron\PYZus{}nb}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{empirical\PYZus{}loss}\PY{p}{,} \PY{n}{test\PYZus{}loss}\PY{p}{)}
-   
-    \PY{n}{savePlot}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mlp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{filename}\PY{p}{)}
+    Selecionei o XGBoost como modelo preferencial devido aos resultados
+ligeiramente melhores em termos de menor erro de teste e maior acurácia,
+em comparação com a Random Forest. Além disso, o XGBoost oferece mais
+hiperparâmetros para ajustar a qualidade do modelo.
 
-\PY{n}{max\PYZus{}neuron\PYZus{}nb} \PY{o}{=} \PY{l+m+mi}{200}
-\PY{n}{plotCapacityGraphsForMLP}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}neuron\PYZus{}nb}\PY{p}{)}
-\PY{n}{plotCapacityGraphsForMLP}\PY{p}{(}\PY{n}{X\PYZus{}questions}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x\PYZus{}questions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}neuron\PYZus{}nb}\PY{p}{)}
-\PY{n}{plotCapacityGraphsForMLP}\PY{p}{(}\PY{n}{X\PYZus{}drugs}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x\PYZus{}drugs}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}neuron\PYZus{}nb}\PY{p}{)}
-\PY{n}{plotCapacityGraphsForMLP}\PY{p}{(}\PY{n}{X\PYZus{}random}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x\PYZus{}random}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}neuron\PYZus{}nb}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{ }{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{plotCapacityGraphsForXGBoost}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{filename}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
-    \PY{n}{gamma} \PY{o}{=} \PY{l+m+mi}{0}
-    \PY{n}{createPlotDir}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{xgboost}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-    \PY{n}{data} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{p}{)}
-    \PY{k}{for} \PY{n}{depth} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
-        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{depth}\PY{o}{/}\PY{n}{max\PYZus{}depth}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-        \PY{p}{(}\PY{n}{empirical\PYZus{}loss}\PY{p}{,} \PY{n}{test\PYZus{}loss}\PY{p}{)} \PY{o}{=} \PY{n}{trainXGBBoostingClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{n}{depth}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{n}{gamma}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{n}{print\PYZus{}accuracy}\PY{p}{)}
-        \PY{n}{data}\PY{p}{[}\PY{n}{depth}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{empirical\PYZus{}loss}\PY{p}{,} \PY{n}{test\PYZus{}loss}\PY{p}{)}
-   
-    \PY{n}{savePlot}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{xgboost}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{filename}\PY{p}{)}
-
-\PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{l+m+mi}{10}
-\PY{n}{plotCapacityGraphsForXGBoost}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{p}{)} \PY{c+c1}{\PYZsh{} Adicionar X\PYZus{}drugs parece não ter efeito}
-\PY{n}{plotCapacityGraphsForXGBoost}\PY{p}{(}\PY{n}{X\PYZus{}questions}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x\PYZus{}questions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)} \PY{c+c1}{\PYZsh{} Resultado diferente do aleatorio mas ainda sim}
-\PY{n}{plotCapacityGraphsForXGBoost}\PY{p}{(}\PY{n}{X\PYZus{}drugs}\PY{p}{,} \PY{n}{y\PYZus{}gic}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x\PYZus{}drugs}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{p}{)} \PY{c+c1}{\PYZsh{} X\PYZus{}drugs parece ter nenhum poder preditivo}
-\PY{n}{plotCapacityGraphsForXGBoost}\PY{p}{(}\PY{n}{X\PYZus{}random}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x\PYZus{}random}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{ }{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{plotCapacityGraphsForRandomForest}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{filename}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{p}{)}\PY{p}{:}
-    \PY{n}{gamma} \PY{o}{=} \PY{l+m+mi}{0}
-    \PY{n}{createPlotDir}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{random\PYZus{}forest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-    \PY{n}{data} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{p}{)}
-    \PY{k}{for} \PY{n}{depth} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
-        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{p}{(}\PY{n}{depth}\PY{o}{/}\PY{n}{max\PYZus{}depth}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZpc{}...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-        \PY{p}{(}\PY{n}{empirical\PYZus{}loss}\PY{p}{,} \PY{n}{test\PYZus{}loss}\PY{p}{)} \PY{o}{=} \PY{n}{trainRandomForestClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{n}{depth}\PY{p}{)}
-        \PY{n}{data}\PY{p}{[}\PY{n}{depth}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{empirical\PYZus{}loss}\PY{p}{,} \PY{n}{test\PYZus{}loss}\PY{p}{)}
-   
-    \PY{n}{savePlot}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{random\PYZus{}forest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{filename}\PY{p}{)}
-
-\PY{n}{max\PYZus{}depth} \PY{o}{=} \PY{l+m+mi}{20}
-\PY{n}{plotCapacityGraphsForRandomForest}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{p}{)}
-\PY{n}{plotCapacityGraphsForRandomForest}\PY{p}{(}\PY{n}{X\PYZus{}questions}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x\PYZus{}questions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{p}{)}
-\PY{n}{plotCapacityGraphsForRandomForest}\PY{p}{(}\PY{n}{X\PYZus{}drugs}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x\PYZus{}drugs}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{p}{)}
-\PY{n}{plotCapacityGraphsForRandomForest}\PY{p}{(}\PY{n}{X\PYZus{}random}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x\PYZus{}random}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    Selecionei o XGBoost pois ele tem resultados ligeramente melhores (menor
-erro de teste e maior acuracia) que os da random forest, e alem disso
-ele tem mais hiperparâmetros para ajustar a qualidade do modelo. Como
-esperado o desempenho da MLP é baixo e não consistente ao longo dos
+Como esperado, o desempenho da MLP é baixo e inconsistente ao longo dos
 diferentes níveis de complexidade.
 
-O ajuste de hiperparâmetros nesse contexto não é muito relevante, já que
-a qualidade geral dos modelos é bem baixa devido ao pequeno número de
-dados.
-
-Comparei os diferentes modelos primeiro considerando apenas o conjunto
-de features X, depois de selecionado o modelo podemos ver como os
-diferentes conjuntos de features afetam a capacidade preditiva.
+No contexto atual, o ajuste de hiperparâmetros não é tão relevante, pois
+a qualidade geral dos modelos é baixa devido ao pequeno número de dados
+disponíveis.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{219}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{trainRandomForestClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-\PY{n}{\PYZus{}} \PY{o}{=}\PY{n}{trainRandomForestClassifier}\PY{p}{(}\PY{n}{X\PYZus{}random}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-empirical\_accuracy:  86.94\% | test\_accuracy:  56.72\%
-empirical\_accuracy:  72.27\% | test\_accuracy:  53.73\%
-    \end{Verbatim}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{220}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{trainXGBBoostingClassifier}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{print\PYZus{}importance}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
-\PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{trainXGBBoostingClassifier}\PY{p}{(}\PY{n}{X\PYZus{}random}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{n}{print\PYZus{}accuracy}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-empirical\_accuracy:  84.58\% | test\_accuracy:  60.20\%
-empirical\_accuracy:  69.90\% | test\_accuracy:  54.23\%
-    \end{Verbatim}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{221}{\boxspacing}
+\prompt{In}{incolor}{544}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{Image}\PY{p}{(}\PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plots/manual/models\PYZus{}capacity\PYZus{}x.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
  
             
-\prompt{Out}{outcolor}{221}{}
+\prompt{Out}{outcolor}{544}{}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{main_files/main_25_0.jpg}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{report_files/report_21_0.jpg}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -866,17 +844,17 @@ que X\_questions pode ser usado para fazer essa predição (como discutido
 em nossa reunião).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{2}{\boxspacing}
+\prompt{In}{incolor}{545}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{Image}\PY{p}{(}\PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plots/manual/xgboost\PYZus{}features.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
  
             
-\prompt{Out}{outcolor}{2}{}
+\prompt{Out}{outcolor}{545}{}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{main_files/main_27_0.jpg}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{report_files/report_23_0.jpg}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -886,54 +864,48 @@ navalha de Ockham para escolher o conjunto de features X\_questions, já
 que ele é menos complexo que X e gera um modelo com aproximadamente a
 mesma qualidade.
 
-Podemos observar que pela confusion matrix dos dados originais (com uma
-distribuição assimétrica) que o modelo é completamente desbalanceado, só
-sabendo identificar verdadeiros negativos e tendo uma péssima acurácia
-para verdadeiros positivos. Enquanto o outro, apesar de ter piores
-resultados, é mais balanceado em suas classificações.
+Podemos observar que pela confusion matrix dos dados originais, com uma
+distribuição assimétrica para o lado dos dados negativos, que o modelo é
+completamente desbalanceado, só sabendo identificar verdadeiros
+negativos. E se observamos bem a confusion matrix desse classificador,
+podemos ver que ele só prediz 0, qualquer que seja a entrada. A acurácia
+elevada desse modelo é explicada pela própria distribuição dos dados,
+como 85\% dos exemplos são de casos negativos se o modelo predizer 0
+para todos as entradas ele em média vai acertar 85\% das vezes. Ao usar
+uma distribuição balanceada para avaliar esse classificador a acurácia é
+pior que adivinhar aleatoriamente.
+
+O modelo que usa a distribuição equilibrada, apesar de ter pior
+acurácia, é mais balanceado em suas classificações. Tendo uma taxa de
+acerto de 63\% ele é ligeiramente melhor que adivinhar aleatoriamente.
+
+Por fim, o modelo com uma distribuição maior de casos positivos é
+semelhante ao primeiro avaliado, mas apresenta um desequilíbrio para o
+lado direito da matriz de confusão, com mais previsões positivas e
+falsos positivos. A alta acurácia desse modelo não é confiável, pois ele
+utiliza o menor conjunto de dados, sendo necessário remover mais
+exemplos para obter uma distribuição com mais casos positivos. Esse
+valor elevado de acurácia é uma anomalia de variância, pois o conjunto
+pequeno de dados de treinamento favorece o treinamento de um modelo
+``overfitado'' que não é generalizável quando adicionamos mais dados.
+
+Portanto, é importante ter cuidado ao interpretar a acurácia do modelo
+que apresenta um desequilíbrio significativo na matriz de confusão. É
+preferível escolher um modelo que mantenha um equilíbrio adequado entre
+as previsões positivas e negativas.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{16}{\boxspacing}
+\prompt{In}{incolor}{5}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{meanConfusionMatrix}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{name}\PY{p}{)}\PY{p}{:}
-    \PY{n}{k} \PY{o}{=} \PY{l+m+mi}{40}
-    \PY{n}{mean\PYZus{}confusion\PYZus{}matrix} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
-    \PY{n}{kfold} \PY{o}{=} \PY{n}{KFold}\PY{p}{(}\PY{n}{n\PYZus{}splits}\PY{o}{=}\PY{n}{k}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-
-    \PY{k}{for} \PY{n}{train\PYZus{}index}\PY{p}{,} \PY{n}{test\PYZus{}index} \PY{o+ow}{in} \PY{n}{kfold}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{p}{:}
-        \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{n}{train\PYZus{}index}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{test\PYZus{}index}\PY{p}{]}
-        \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{y}\PY{p}{[}\PY{n}{train\PYZus{}index}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{p}{[}\PY{n}{test\PYZus{}index}\PY{p}{]}
-
-        \PY{n}{clf} \PY{o}{=} \PY{n}{xgb}\PY{o}{.}\PY{n}{XGBClassifier}\PY{p}{(}\PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,}  \PY{n}{gamma}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{n}{eta}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{min\PYZus{}child\PYZus{}weight}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{subsample}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{,} 
-                            \PY{n}{colsample\PYZus{}bytree}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{,} \PY{n}{scale\PYZus{}pos\PYZus{}weight}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-        \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
-        \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
-        \PY{n}{mean\PYZus{}confusion\PYZus{}matrix} \PY{o}{+}\PY{o}{=} \PY{n}{confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
-
-    \PY{n}{mean\PYZus{}confusion\PYZus{}matrix} \PY{o}{/}\PY{o}{=} \PY{n}{k}
-    \PY{n}{sns}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{font\PYZus{}scale}\PY{o}{=}\PY{l+m+mf}{1.4}\PY{p}{)}
-    \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{mean\PYZus{}confusion\PYZus{}matrix}\PY{p}{,} \PY{n}{annot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{annot\PYZus{}kws}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{size}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{\PYZcb{}}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Blues}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-    \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{name}\PY{p}{)}
-    \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Categoria predita}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-    \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Categoria real}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-    \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-
-\PY{n}{meanConfusionMatrix}\PY{p}{(}\PY{n}{X\PYZus{}questions}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confusion matrix usando X\PYZus{}questions bem distribuido}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{Image}\PY{p}{(}\PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plots/manual/confusion\PYZus{}matrix\PYZus{}original\PYZus{}data.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{Image}\PY{p}{(}\PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plots/manual/confusion\PYZus{}matrices.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
-
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{main_files/main_29_0.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-     
+ 
             
-\prompt{Out}{outcolor}{16}{}
+\prompt{Out}{outcolor}{5}{}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{main_files/main_29_1.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{report_files/report_25_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -942,50 +914,61 @@ resultados, é mais balanceado em suas classificações.
 XGBoost.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{222}{\boxspacing}
+\prompt{In}{incolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-\PY{n}{questions} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:}\PY{l+m+mi}{182}\PY{p}{]}
-\PY{n}{questions} \PY{o}{=} \PY{n}{questions}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date\PYZus{}visit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-\PY{n}{questions} \PY{o}{=} \PY{n}{questions}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{questions}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{46}\PY{p}{,} \PY{l+m+mi}{133}\PY{p}{,} \PY{l+m+mi}{158}\PY{p}{,} \PY{l+m+mi}{161}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-
-\PY{n}{drugs} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{185}\PY{p}{:}\PY{p}{]}
-\PY{n}{drugs} \PY{o}{=} \PY{n}{drugs}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{drugs}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{50}\PY{p}{,}\PY{l+m+mi}{51}\PY{p}{,}\PY{l+m+mi}{61}\PY{p}{,}\PY{l+m+mi}{92}\PY{p}{,}\PY{l+m+mi}{101}\PY{p}{,}\PY{l+m+mi}{111}\PY{p}{,}\PY{l+m+mi}{114}\PY{p}{,}\PY{l+m+mi}{121}\PY{p}{,}\PY{l+m+mi}{137}\PY{p}{,}\PY{l+m+mi}{140}\PY{p}{,}\PY{l+m+mi}{141}\PY{p}{,}
-                                        \PY{l+m+mi}{142}\PY{p}{,}\PY{l+m+mi}{143}\PY{p}{,}\PY{l+m+mi}{148}\PY{p}{,}\PY{l+m+mi}{151}\PY{p}{,}\PY{l+m+mi}{152}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-
-\PY{n}{features} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{questions}\PY{p}{,} \PY{n}{drugs}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-\PY{n}{features} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{features}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
-
-\PY{n}{clf} \PY{o}{=} \PY{n}{xgb}\PY{o}{.}\PY{n}{XGBClassifier}\PY{p}{(}\PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,}  \PY{n}{gamma}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{n}{eta}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{min\PYZus{}child\PYZus{}weight}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{subsample}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{,} 
-                            \PY{n}{colsample\PYZus{}bytree}\PY{o}{=}\PY{l+m+mf}{0.8}\PY{p}{,} \PY{n}{scale\PYZus{}pos\PYZus{}weight}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
-\PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}questions}\PY{p}{,} \PY{n}{y}\PY{p}{)}
-
-\PY{n}{feat\PYZus{}imp} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{clf}\PY{o}{.}\PY{n}{get\PYZus{}booster}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{get\PYZus{}fscore}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-\PY{n}{feat\PYZus{}imp}\PY{o}{.}\PY{n}{index} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Index}\PY{p}{(}\PY{n}{feat\PYZus{}imp}\PY{o}{.}\PY{n}{index}\PY{p}{)}
-\PY{n}{feat\PYZus{}imp}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-
-\PY{n}{x\PYZus{}plot} \PY{o}{=} \PY{p}{[} \PY{n+nb}{int}\PY{p}{(}\PY{n}{f}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{f}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n}{feat\PYZus{}imp}\PY{o}{.}\PY{n}{index}\PY{p}{]}
-\PY{n}{y\PYZus{}plot} \PY{o}{=} \PY{p}{[} \PY{n}{feat\PYZus{}imp}\PY{p}{[}\PY{n}{f}\PY{p}{]} \PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n}{feat\PYZus{}imp}\PY{o}{.}\PY{n}{index}\PY{p}{]}
-\PY{n}{x\PYZus{}plot} \PY{o}{=} \PY{p}{[}\PY{n}{features}\PY{p}{[}\PY{n}{feature\PYZus{}index}\PY{p}{]} \PY{k}{for} \PY{n}{feature\PYZus{}index} \PY{o+ow}{in} \PY{n}{x\PYZus{}plot}\PY{p}{]}
-
-\PY{n}{max\PYZus{}features} \PY{o}{=} \PY{l+m+mi}{40}
-\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{x\PYZus{}plot}\PY{p}{[}\PY{p}{:}\PY{n}{max\PYZus{}features}\PY{p}{]}\PY{p}{,} \PY{n}{y\PYZus{}plot}\PY{p}{[}\PY{p}{:}\PY{n}{max\PYZus{}features}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Importância da feature}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Avaliação de importância da feature}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{rotation}\PY{o}{=}\PY{l+m+mi}{90}\PY{p}{)}
-\PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\PY{n}{Image}\PY{p}{(}\PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plots/manual/xgboost\PYZus{}feat\PYZus{}imp.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
-
+ 
+            
+\prompt{Out}{outcolor}{7}{}
+    
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{main_files/main_31_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{report_files/report_27_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
-    Conclusão: Mais dados são necessários para afirmar responsavelmente se
-os remédios predizem (ou não) a melhora dos pacientes, principalmente
-dados de casos positivos.
+
+    Concluindo, é necessário ter mais exemplos de casos positivos para
+afirmar com responsabilidade se a adição dos dados de remédios cria
+modelos melhores em comparação com apenas os dados das perguntas. Com
+base nos resultados e no meu conhecimento do conjunto de dados
+disponível, não é possível afirmar estatisticamente se o conjunto de
+features ``X'' é melhor do que ``X\_questions''. No entanto, é visível
+que o conjunto de features ``X\_drugs'' possui um poder preditivo
+semelhante ao de ``X\_questions''.
+
+Acredito firmemente que meu estudo tem a capacidade de responder a essa
+pergunta, desde que sejam fornecidos mais exemplos de casos. Se eu
+tivesse a oportunidade de continuar desenvolvendo esse trabalho, focaria
+nessa questão e no entendimento das features por meio de diálogos com
+médicos especialistas. Isso porque remover features que não são
+relevantes para o problema reduziria a dimensionalidade dos dados,
+resultando em modelos melhores para a mesma quantidade de exemplos.
+
+Abaixo, mostro um gráfico que justifica minha crença no potencial do meu
+estudo. Nele, é possível observar como a acurácia do modelo evolui à
+medida que o tamanho do conjunto de dados aumenta (distribuído de forma
+equilibrada, como discutido anteriormente). Podemos ver que a acurácia
+não converge para o valor máximo, o que indica que ainda há espaço para
+melhorar a qualidade do modelo ao aumentar a quantidade de dados
+disponíveis.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{Image}\PY{p}{(}\PY{n}{filename}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plots/manual/accuracy\PYZus{}conv\PYZus{}data.png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{9}{}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{report_files/report_29_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
 
 
     % Add a bibliography block to the postdoc
